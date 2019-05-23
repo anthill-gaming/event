@@ -1,3 +1,1 @@
-# celery from pip is broken for python 3.7+
-# celery>=4.2.1
-git+https://github.com/celery/celery.git
+celery>=4.3.0
