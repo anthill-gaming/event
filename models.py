@@ -94,7 +94,15 @@ class Event(db.Model):
 
     @hybrid_property
     def active(self) -> bool:
-        return self.finish_at > timezone.now() >= self.on_start() and self.is_active
+        return self.finish_at > timezone.now() >= self.start_at and self.is_active
+
+    @active.expression
+    def active(cls) -> bool:
+        return db.and_(
+            cls.finish_at > timezone.now(),
+            cls.start_at <= timezone.now(),
+            cls.is_active
+        )
 
     @hybrid_property
     def started(self) -> bool:
